@@ -13,7 +13,7 @@
               <h1>{{$page.post.title}}</h1>
               <!-- <h2 class="subheading">Problems look mighty small from 150 miles up</h2> -->
               <span class="meta">Posted by
-                <a href="#">Start Bootstrap</a>
+                <a href="#">{{$page.post.admin_user.firstname + $page.post.admin_user.lastname}}</a>
                 {{$page.post.created_at}}</span>
             </div>
           </div>
@@ -45,7 +45,11 @@ query ($id: ID!) {
       id,
       title
     },
-    created_at
+    created_at,
+    admin_user{
+      firstname,
+      lastname
+    }
   }
 }
 </page-query>
