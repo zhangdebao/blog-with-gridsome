@@ -14,6 +14,29 @@ module.exports = {
         path: './content/blog/**/*.md',
         remark: {}
       }
+    },
+    { //Gridsome案例-将Strapi数据预取到Gridsome应用中
+      use: '@gridsome/source-strapi',
+      options: {
+        apiURL: 'http://localhost:1337',
+        queryLimit: 1000, // Defaults to 100
+        contentTypes: ['post'],
+        // singleTypes: ['impressum'],
+        // Possibility to login with a Strapi user,
+        // when content types are not publicly available (optional).
+        // loginData: {
+        //   identifier: '',
+        //   password: ''
+        // }
+      }
     }
-  ]
+  ],
+  templates: {
+    StrapiPost: [
+      {
+        path: '/post/:id',
+        component: './src/templates/Post.vue'
+      }
+    ]
+  }
 }
