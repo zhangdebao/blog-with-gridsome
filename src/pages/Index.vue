@@ -1,5 +1,21 @@
 <template>
   <Layout>
+    <!-- Page Header -->
+    <header class="masthead" :style="{
+      backgroundImage: `url(http://localhost:1337${general.cover.url})`
+    }">
+      <div class="overlay"></div>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <div class="site-heading">
+              <h1>{{ general.title }}</h1>
+              <span class="subheading">{{general.subtitle}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
     <!-- Main Content -->
     <div class="container">
       <div class="row">
@@ -17,7 +33,7 @@
               <a href="#">{{ edge.node.admin_user.firstname + edge.node.admin_user.lastname }}</a>
               on {{ edge.node.created_at }}</p>
               <span v-for="tag in edge.node.tags" :key="tag.id">
-                <a href="" >{{tag.title}} &nbsp;&nbsp;</a>
+                <g-link :to="`/tag/${tag.id}`" >{{tag.title}} &nbsp;&nbsp;</g-link>
               </span>
           </div>
           <hr>
@@ -55,6 +71,18 @@ query ($page: Int){
       }
     }
   }
+  general: allStrapiGeneral {
+    edges {
+      node {
+        id,
+        title,
+        subtitle,
+        cover {
+          url
+        }
+      }
+    }
+  }
 }
 </page-query>
 <script>
@@ -66,6 +94,11 @@ export default {
   },
   metaInfo: {
     title: 'Hello, world!'
+  },
+  computed: {
+    general () {
+      return this.$page.general.edges[0].node
+    }
   }
 }
 </script>
